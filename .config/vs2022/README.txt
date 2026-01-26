@@ -1,0 +1,2 @@
+Guide: https://github.com/VsVim/VsVim/wiki/VsVim-Nonstandard-Behavior
+VS Shortcut References: https://learn.microsoft.com/en-us/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio?view=visualstudio

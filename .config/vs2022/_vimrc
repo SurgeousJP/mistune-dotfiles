@@ -1,0 +1,43 @@
+
+" ======================
+" Leader key
+" ======================
+let mapleader = " "
+
+" ======================
+" Ctrl+C as Escape
+" ======================
+imap <C-c> <Esc>
+vnoremap <C-c> <Esc>
+snoremap <C-c> <Esc>
+
+" ======================
+" Navigation / VS actions
+" ======================
+
+" Focus Editor
+nnoremap <leader>` :vsc Window.ActivateDocumentWindow<CR>
+
+" Go to implementation
+nnoremap gm :vsc Edit.GoToImplementation<CR>
+
+" Go to definition (pair it with implementation)
+nnoremap gd :vsc Edit.GoToDefinition<CR>
+
+" Find all references
+nnoremap gr :vsc Edit.FindAllReferences<CR>
+
+" Quick actions (lightbulb)
+nnoremap ga :vsc View.QuickActions<CR>
+nnoremap ga :vsc EditorContextMenus.CodeWindow.QuickActionsForPosition<CR>
+
+" ======================
+" Quality-of-life
+" ======================
+
+" Clear search highlight
+nnoremap <leader>h :nohlsearch<CR>
+
+" Keep cursor centered when searching
+nnoremap n nzzzv
+nnoremap N Nzzzv
