@@ -2,16 +2,95 @@ return {
   "hrsh7th/nvim-cmp",
   dependencies = {
     { "roobert/tailwindcss-colorizer-cmp.nvim", config = true },
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-buffer", 
+    "hrsh7th/cmp-path",
+    "hrsh7th/cmp-cmdline",
+    "L3MON4D3/LuaSnip",
+    "saadparwaiz1/cmp_luasnip",
+    "rafamadriz/friendly-snippets",
+    "zbirenbaum/copilot-cmp",
   },
-  opts = function(_, opts)
-    -- Ensure formatting table exists
-    opts.formatting = opts.formatting or {}
-    local format_kinds = opts.formatting.format
-    opts.formatting.format = function(entry, item)
-      if format_kinds then
-        format_kinds(entry, item)
-      end
-      return require("tailwindcss-colorizer-cmp").formatter(entry, item)
-    end
+  config = function()
+    local cmp = require("cmp")
+    local luasnip = require("luasnip")
+
+    -- Load friendly-snippets
+    require("luasnip.loaders.from_vscode").lazy_load()
+
+    cmp.setup({
+      snippet = {
+        expand = function(args)
+          luasnip.lsp_expand(args.body)
+        end,
+      },
+      mapping = cmp.mapping.preset.insert({
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ['<Tab>'] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif luasnip.expandable() then
+            luasnip.expand()
+          elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+      }),
+      sources = cmp.config.sources({
+        { name = 'copilot' },
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' },
+      }, {
+        { name = 'buffer' },
+        { name = 'path' },
+      }),
+      formatting = {
+        format = function(entry, item)
+          -- Apply tailwindcss colorizer
+          return require("tailwindcss-colorizer-cmp").formatter(entry, item)
+        end,
+      },
+    })
+
+    -- Set configuration for specific filetype
+    cmp.setup.filetype('gitcommit', {
+      sources = cmp.config.sources({
+        { name = 'buffer' },
+      })
+    })
+
+    -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore)
+    cmp.setup.cmdline({ '/', '?' }, {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = {
+        { name = 'buffer' }
+      }
+    })
+
+    -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore)
+    cmp.setup.cmdline(':', {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = cmp.config.sources({
+        { name = 'path' }
+      }, {
+        { name = 'cmdline' }
+      }),
+      matching = { disallow_symbol_nonprefix_matching = false }
+    })
   end,
 }

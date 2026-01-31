@@ -1,3 +1,3 @@
 return {
-  { "mfussenegger/nvim-lint", enabled = false },
+  -- Disabled plugins go here
 }

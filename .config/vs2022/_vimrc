@@ -10,10 +10,15 @@ let mapleader = " "
 imap <C-c> <Esc>
 vnoremap <C-c> <Esc>
 snoremap <C-c> <Esc>
+nnoremap <C-c> <Esc>
 
 " ======================
 " Navigation / VS actions
 " ======================
+
+" Yank to clipboard setup
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
 
 " Focus Editor
 nnoremap <leader>` :vsc Window.ActivateDocumentWindow<CR>
@@ -30,6 +35,7 @@ nnoremap gr :vsc Edit.FindAllReferences<CR>
 " Quick actions (lightbulb)
 nnoremap ga :vsc View.QuickActions<CR>
 nnoremap ga :vsc EditorContextMenus.CodeWindow.QuickActionsForPosition<CR>
+nnoremap <C-k><C-i> :vsc View.QuickInfo<CR>
 
 " ======================
 " Quality-of-life

@@ -1,6 +1,6 @@
 # Windows navigation
-- Win + S: Open search box
-
+- Win: Open search box
+- Tab limit: System > Multitasking > Show tabs when snapping/pressing Alt+Tab > No tabs
 # Windows Powershell CLI
 ## Documentation: https://www.stationx.net/powershell-cheat-sheet
 
