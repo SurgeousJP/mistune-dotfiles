@@ -107,7 +107,6 @@
     "terminal.integrated.fontFamily": "RobotoMono Nerd Font Mono",
     "terminal.integrated.fontSize": 15,
     "terminal.integrated.stickyScroll.enabled": false,
-    "vscode-neovim.neovimExecutablePaths.win32": "C:\\Users\\ntbao1\\Downloads\\nvim-win64\\bin\\nvim.exe",
     "window.titleBarStyle": "custom",
     // workbench settings
     "workbench.colorCustomizations": {
