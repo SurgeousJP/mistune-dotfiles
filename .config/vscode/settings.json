@@ -1,16 +1,131 @@
 {
-    "editor.fontFamily": "Roboto Mono, monospace",
-    "editor.fontSize": 13,
-    "editor.lineHeight": 22,
-    "glassit.alpha": 240,
-    "files.associations": {
-        "\"*.svg\"": "\"default\""
+    "[css]": {},
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
     },
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "angular-cli.component.enabled": false,
+    "angular-cli.module.enabled": false,
+    "angular-cli.pipe.enabled": false,
+    "angular-cli.service.enabled": false,
+    "angular2-files.menu.class": false,
+    "angular2-files.menu.component": false,
+    "angular2-files.menu.directive": false,
+    "angular2-files.menu.enum": false,
+    "angular2-files.menu.interface": false,
+    "angular2-files.menu.module": false,
+    "angular2-files.menu.pipe": false,
+    "angular2-files.menu.route": false,
+    "angular2-files.menu.service": false,
+    "chat.instructionsFilesLocations": {
+        ".github/instructions": true,
+        "C:\\Users\\ntbao1\\AppData\\Local\\Temp\\postman-collections-post-response.instructions.md": true,
+        "C:\\Users\\ntbao1\\AppData\\Local\\Temp\\postman-collections-pre-request.instructions.md": true,
+        "C:\\Users\\ntbao1\\AppData\\Local\\Temp\\postman-folder-post-response.instructions.md": true,
+        "C:\\Users\\ntbao1\\AppData\\Local\\Temp\\postman-folder-pre-request.instructions.md": true,
+        "C:\\Users\\ntbao1\\AppData\\Local\\Temp\\postman-http-request-post-response.instructions.md": true,
+        "C:\\Users\\ntbao1\\AppData\\Local\\Temp\\postman-http-request-pre-request.instructions.md": true
+    },
+    "chat.viewSessions.orientation": "stacked",
+    "claudeCode.preferredLocation": "panel",
+    "css.completion.completePropertyWithSemicolon": false,
+    // custom-ui-style
+    "custom-ui-style.font.monospace": "Roboto Mono",
+    "custom-ui-style.font.sansSerif": "Roboto Mono",
+    "custom-ui-style.stylesheet": {
+        "monaco-workbench": {
+            "font-size": "13px",
+            "line-height": "22px"
+        }
+    },
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.cursorBlinking": "solid",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.cursorStyle": "line",
+    "editor.cursorWidth": 3,
+    "editor.fontFamily": "\"Roboto Mono\", monospace",
+    "editor.fontSize": 13,
+    "editor.fontWeight": "400",
+    "editor.lineHeight": 22,
+    "editor.lineNumbers": "relative",
+    "editor.wordWrap": "on",
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
     },
+    "files.associations": {
+        "\"*.svg\"": "\"default\""
+    },
+    // files settings
+    "files.exclude": {
+        "**/.angular": true,
+        "**/.DS_Store": true,
+        "**/.git": true,
+        "**/.hg": true,
+        "**/.svn": true,
+        "**/.vs": true,
+        // Add .NET build and cache folders
+        "**/bin": true,
+        "**/node_modules": true,
+        "**/obj": true,
+        "**/Thumbs.db": true
+    },
+    "files.watcherExclude": {
+        "**/.angular/cache/**": true,
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/.hg/store/**": true,
+        "**/.vs": true,
+        "**/bin": true,
+        "**/node_modules/**": true,
+        "**/obj": true
+    },
+
+    // git settings
+    "git.autorefresh": true,
+    "git.enabled": true,
+    "git.decorations.enabled": false,
+    "scm.diffDecorations": "gutter",
+    
+    "github.copilot.enable": {
+        "*": true,
+        "markdown": false,
+        "plaintext": false,
+        "scminput": false
+    },
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "gitlens.ai.model": "vscode",
+    "gitlens.ai.vscode.model": "copilot:gpt-4.1",
+    "glassit.alpha": 240,
+    "postman.mcp.notifications.postmanMCP": false,
+    // search settings
+    "search.exclude": {
+        "**/*.jpeg": true,
+        "**/*.jpg": true,
+        "**/*.png": true,
+        "**/*.svg": true,
+        "**/*.ttf": true,
+        "**/bower_components": true,
+        "**/build": true,
+        "**/dist": true,
+        "**/node_modules": true
+    },
+    "security.workspace.trust.untrustedFiles": "open",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.fontFamily": "RobotoMono Nerd Font Mono",
+    "terminal.integrated.fontSize": 15,
+    "terminal.integrated.stickyScroll.enabled": false,
+    "vscode-neovim.neovimExecutablePaths.win32": "C:\\Users\\ntbao1\\Downloads\\nvim-win64\\bin\\nvim.exe",
+    "window.titleBarStyle": "custom",
+    // workbench settings
+    "workbench.colorCustomizations": {
+        "editorCursor.foreground": "#ffffff"
+    },
+    "workbench.colorTheme": "Dracula Theme Soft",
     "workbench.editor.empty.hint": "hidden",
-    "customizeUI.font.regular": "Roboto Mono, monspace",
-    "customizeUI.font.monospace": "Roboto Mono, monospace",
-    "github.copilot.nextEditSuggestions.enabled": true
+    "workbench.editor.limit.enabled": true,
+    "workbench.editor.limit.perEditorGroup": false,
+    "workbench.editor.limit.value": 5,
+    "workbench.iconTheme": "material-icon-theme"
 }

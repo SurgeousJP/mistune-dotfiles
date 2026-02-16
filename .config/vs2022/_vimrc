@@ -36,6 +36,7 @@ nnoremap gr :vsc Edit.FindAllReferences<CR>
 nnoremap ga :vsc View.QuickActions<CR>
 nnoremap ga :vsc EditorContextMenus.CodeWindow.QuickActionsForPosition<CR>
 nnoremap <C-k><C-i> :vsc View.QuickInfo<CR>
+nnoremap gp :vsc Edit.PeekDefinition<CR>
 
 " ======================
 " Quality-of-life

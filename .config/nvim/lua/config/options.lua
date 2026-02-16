@@ -9,3 +9,5 @@ vim.opt.termguicolors = true
 vim.opt.signcolumn = "yes"
 vim.opt.clipboard = "unnamedplus"
 vim.opt.scrolloff = 8
+vim.opt.ignorecase = true
+vim.opt.smartcase = true

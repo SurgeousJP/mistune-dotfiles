@@ -6,9 +6,13 @@ local map = vim.keymap.set
 map("n", "<leader>w", ":w<CR>")
 map("n", "<leader>q", ":q<CR>")
 map("n", "<leader>e", ":Ex<CR>")
+
+-- Map Esc to Ctrl-c in insert, visual, and select modes
 map("i", "<C-c>", "<Esc>")
 map("v", "<C-c>", "<Esc>")
 map("s", "<C-c>", "<Esc>")
+
+-- Map saved clipboard yank
 map("n", "<leader>y", '"+y')
 map("v", "<leader>y", '"+y')
 
@@ -18,8 +22,15 @@ map("n", "dw", 'vb"_d')
 -- Select all
 map("n", "<C-a>", "gg<S-v>G")
 
--- VsCode keybindings remap
-map("n", "gI", vim.lsp.buf.implementation) -- Go to implementation (like Ctrl+F12 in VS Code)
-map("n", "gr", vim.lsp.buf.references) -- Go to references (like Shift+F12 in VS Code)  
-map("n", "ga", vim.lsp.buf.code_action) -- Quick action (like Ctrl+. in VS Code)
-map("v", "ga", vim.lsp.buf.code_action) -- Quick action in visual mode
+-- VSCode specific keymaps
+if vim.g.vscode then
+  -- Navigation keymaps
+  map("n", "gm", function() require("vscode").action("editor.action.goToImplementation") end, { silent = true })
+  map("n", "gr", function() require("vscode").action("editor.action.goToReferences") end, { silent = true })
+  map("n", "<leader>n", function() require("vscode").action("workbench.action.previousEditor") end, { silent = true })
+  map("n", "<leader>m", function() require("vscode").action("workbench.action.nextEditor") end, { silent = true })
+  map("n", "<leader>w", function() require("vscode").action("workbench.action.closeActiveEditor") end, { silent = true })
+  map("n", "<C-m><C-o>", function() require("vscode").action("editor.foldAll") end, { silent = true })
+  map("n", "<C-m><C-u>", function() require("vscode").action("editor.unfoldAll") end, { silent = true })
+  map("n", "gp", function() require("vscode").action("editor.action.showHover") end, { silent = true })
+end

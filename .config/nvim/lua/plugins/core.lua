@@ -1,4 +1,96 @@
 -- every spec file under the "plugins" directory will be loaded automatically by lazy.nvim
+
+-- =========================
+-- Performance Optimizations - File Exclusions
+-- =========================
+vim.opt.wildignore:append({
+  -- Version Control
+  "*.git/*", ".git\\*", ".svn/*", ".hg/*",
+  
+  -- Dependencies & Build
+  "*/node_modules/*", "node_modules\\*",
+  "*/bin/*", "bin\\*", "*/obj/*", "obj\\*",
+  "*/target/*", "*/build/*", "*/dist/*", "*/out/*",
+  "*/vendor/*", "*/.nuget/*", "*/packages/*",
+  
+  -- IDE & Editor
+  "*/.vs/*", ".vs\\*", "*/.vscode/*", "*/.idea/*",
+  "*.suo", "*.user", "*.userosscache", "*.sln.docstates",
+  
+  -- Compiled & Binary
+  "*.exe", "*.dll", "*.so", "*.dylib", "*.a", "*.lib",
+  "*.o", "*.obj", "*.pdb", "*.class", "*.jar", "*.war",
+  "*.pyc", "*/__pycache__/*",
+  
+  -- Logs & Temp
+  "*.log", "*.tmp", "*.temp", "*.swp", "*.swo", 
+  "*.DS_Store", "Thumbs.db",
+  
+  -- Media & Archives
+  "*.jpg", "*.jpeg", "*.png", "*.gif", "*.bmp", "*.ico",
+  "*.mp3", "*.mp4", "*.avi", "*.mov", "*.wmv",
+  "*.pdf", "*.zip", "*.tar", "*.gz", "*.7z", "*.rar",
+})
+
+-- Prevent certain files from being opened as buffers
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+  pattern = {
+    "*.min.js", "*.min.css", -- Minified files
+    "package-lock.json", "yarn.lock", "pnpm-lock.yaml", -- Lock files
+    "*.map", -- Source maps
+    "*.d.ts", -- TypeScript declaration files (read-only)
+  },
+  callback = function(args)
+    -- Set buffer as read-only and don't track changes
+    vim.bo[args.buf].readonly = true
+    vim.bo[args.buf].modifiable = false
+    vim.bo[args.buf].swapfile = false
+    vim.bo[args.buf].undofile = false
+    vim.bo[args.buf].backup = false
+    vim.bo[args.buf].writebackup = false
+    
+    -- Disable LSP for these files
+    vim.b[args.buf].autoformat = false
+    
+    -- Show notification for large/excluded files
+    local filename = vim.fn.expand("%:t")
+    if vim.fn.match(filename, '\\.min\\.') >= 0 then
+      vim.notify("Opened minified file (read-only): " .. filename, vim.log.levels.INFO)
+    end
+  end,
+})
+
+-- Exclude large files from loading completely
+vim.api.nvim_create_autocmd({"BufReadPre"}, {
+  callback = function(args)
+    local file = args.file
+    if file == "" then return end
+    
+    local max_filesize = 1024 * 1024 -- 1MB
+    local ok, stats = pcall(vim.loop.fs_stat, file)
+    
+    if ok and stats and stats.size > max_filesize then
+      vim.notify(string.format("File too large (%dMB), opening with limited features", math.floor(stats.size / 1024 / 1024)), vim.log.levels.WARN)
+      
+      -- Disable heavy features for large files
+      vim.b[args.buf].large_file = true
+      vim.bo[args.buf].swapfile = false
+      vim.bo[args.buf].undofile = false
+      vim.bo[args.buf].backup = false
+      vim.bo[args.buf].writebackup = false
+      vim.bo[args.buf].syntax = ""
+      vim.b[args.buf].autoformat = false
+      
+      -- Disable treesitter
+      vim.cmd("TSBufDisable highlight")
+      vim.cmd("TSBufDisable indent")
+      
+      -- Disable LSP
+      vim.cmd("LspStop")
+    end
+  end,
+})
+
 return {
   -- =========================
   -- Colorscheme
@@ -57,12 +149,83 @@ return {
       require("telescope").setup({
         defaults = {
           file_ignore_patterns = {
-            "node_modules",
-            "%.git",
-            "%.git\\",
+            -- Version Control
             "%.git/",
-            "%.git\\.*",
-            "%.git/.*",
+            "%.git\\",
+            "%.gitignore",
+            "%.gitmodules",
+            "%.svn/",
+            "%.hg/",
+            
+            -- Dependencies & Package Managers
+            "node_modules/",
+            "node_modules\\",
+            "package%-lock%.json",
+            "yarn%.lock",
+            "pnpm%-lock%.yaml",
+            "vendor/",
+            "Godeps/",
+            "%.nuget/",
+            "packages/",
+            
+            -- Build Outputs
+            "target/",
+            "build/",
+            "dist/",
+            "out/",
+            "bin/",
+            "bin\\",
+            "obj/",
+            "obj\\",
+            "%.o",
+            "%.a",
+            "%.so",
+            "%.dylib",
+            "%.dll",
+            "%.exe",
+            "%.pdb",
+            "%.class",
+            "%.jar",
+            "%.war",
+            "%.pyc",
+            "__pycache__/",
+            "%.cache/",
+            
+            -- IDE & Editor
+            "%.vs/",
+            "%.vs\\",
+            "%.vscode/",
+            "%.idea/",
+            "%.eclipse/",
+            "%.settings/",
+            "%.project",
+            "%.classpath",
+            "%.suo",
+            "%.user",
+            "%.userosscache",
+            "%.sln%.docstates",
+            
+            -- Logs & Temp
+            "%.log",
+            "%.tmp",
+            "%.temp",
+            "%.swp",
+            "%.swo",
+            "%.DS_Store",
+            "Thumbs%.db",
+            
+            -- Database & Cache
+            "%.db",
+            "%.sqlite",
+            "%.sqlite3",
+            
+            -- Media Files (usually not edited)
+            "%.jpg", "%.jpeg", "%.png", "%.gif", "%.bmp", "%.ico",
+            "%.mp3", "%.mp4", "%.avi", "%.mov", "%.wmv",
+            "%.pdf", "%.doc", "%.docx", "%.xls", "%.xlsx",
+            
+            -- Archives
+            "%.zip", "%.tar", "%.gz", "%.7z", "%.rar",
           },
         },
         pickers = {
